@@ -1,0 +1,29 @@
+{
+  "name": "phonebookbackend",
+  "version": "0.0.1",
+  "description": "full-stack-open-2019-part3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slinden2/full-stack-open-2019-part3.git"
+  },
+  "author": "Samu Linden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slinden2/full-stack-open-2019-part3/issues"
+  },
+  "homepage": "https://github.com/slinden2/full-stack-open-2019-part3#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  }
+}
