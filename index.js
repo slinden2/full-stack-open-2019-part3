@@ -1,7 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const Person = require('./models/person')
+
 
 app.use(express.static('build'))
 app.use(bodyParser.json())
@@ -42,11 +45,20 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+
+  Person
+    .find({})
+    .then(persons => response.json(persons.map(person => person.toJSON())))
+
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
+  
+  // const person = Person
+  //   .findById(request.params.id)
+  //   .then(foundPerson => response.json(foundPerson.toJSON()))
+  //   .catch(error => console.log(error.message))
+
   const person = persons.find(person => person.id === id)
 
   if (!person) return response.status(404).end()
@@ -62,19 +74,11 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
   const person = request.body
 
-  if (!person.name || !person.number) {
-    return response.status(409).json({ error: "name or number missing" })
-  }
-
-  if (persons.find(p => p.name === person.name)) {
-    return response.status(409).json({ error: "name must be unique" })
-  }
-
-  const maxId = Math.max(...persons.map(person => Number(person.id)))
-  person.id = maxId + 1
-
-  persons = [...persons, person]
-  response.status(201).json(person)
+  const newPerson = new Person(person)
+  
+  newPerson
+    .save()
+    .then(savedPerson => response.status(201).json(savedPerson.toJSON()))
 })
 
 const PORT = process.env.PORT || 3001
