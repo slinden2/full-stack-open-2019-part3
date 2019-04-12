@@ -37,7 +37,7 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
-  const person = Person
+  Person
     .findById(request.params.id)
     .then(foundPerson => {
       if (foundPerson) {
